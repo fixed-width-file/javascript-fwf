@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>javascript-fwf - Fixed Width File Processing for JavaScript</title>
+    <style>
+        :root {
+            --primary: #eab308;
+            --primary-dark: #ca8a04;
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --accent: #fbbf24;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #facc15 0%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        p.subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .badge-list {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            color: var(--accent);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #0f172a;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            color: #ffffff;
+        }
+
+        .btn-secondary {
+            background-color: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        pre {
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>javascript-fwf</h1>
+            <p class="subtitle">A fast, type-safe, language-agnostic compliant JavaScript / Node.js library for parsing, formatting, and generating Fixed Width Files (FWF).</p>
+            <div class="badge-list">
+                <span class="badge">Node.js 18+</span>
+                <span class="badge">Vitest</span>
+                <span class="badge">100% Coverage</span>
+                <span class="badge">FWF Spec v1.0.0</span>
+            </div>
+            <div class="btn-group">
+                <a href="apidocs/index.html" class="btn btn-primary">Browse JSDoc API</a>
+                <a href="https://github.com/fixed-width-file/javascript-fwf" class="btn btn-secondary">GitHub Repository</a>
+            </div>
+        </header>
+
+        <section class="grid">
+            <div class="card">
+                <h3>⚡ Type-Safe Column Definitions</h3>
+                <p>Support for <code>CharColumn</code>, <code>RightCharColumn</code>, <code>PositiveIntegerColumn</code>, <code>PositiveDecimalColumn</code>, <code>DateColumn</code>, <code>TimeColumn</code>, and <code>DateTimeColumn</code>.</p>
+            </div>
+            <div class="card">
+                <h3>📜 Structure Descriptors</h3>
+                <p>Compose header, details, and footer rows using <code>HeaderRowDescriptor</code>, <code>DetailRowDescriptor</code>, and <code>FooterRowDescriptor</code>.</p>
+            </div>
+            <div class="card">
+                <h3>🔍 Cross-Language Hydration</h3>
+                <p>Fully compatible with Python <code>pyfwf</code> and Java <code>java-fwf</code> JSON hydration formats and compliant with <code>fwf-compliance-tests</code> v1.0.0.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Quick Usage Example</h2>
+            <pre><code>import {
+  CharColumn,
+  PositiveIntegerColumn,
+  DetailRowDescriptor,
+  FileDescriptor,
+  Reader
+} from '@fixed-width-file/javascript-fwf';
+
+// 1. Define Columns
+const nameCol = new CharColumn('name', 20, 'User Name');
+const ageCol = new PositiveIntegerColumn('age', 3, 'Age in years');
+
+// 2. Define Descriptors
+const detail = new DetailRowDescriptor([nameCol, ageCol]);
+const fileDescriptor = new FileDescriptor([detail]);
+
+// 3. Read Content
+const content = "KELSON MEDEIROS     045\nMARIA SILVA         030\n";
+const reader = new Reader(content, fileDescriptor, "\n");
+
+for (const row of reader) {
+  console.log(`Name: ${row.name} | Age: ${row.age}`);
+}</code></pre>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Kelson da Costa Medeiros &bull; Fixed Width File Ecosystem</p>
+        </footer>
+    </div>
+</body>
+</html>

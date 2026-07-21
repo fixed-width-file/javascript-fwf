@@ -14,7 +14,8 @@
   "scripts": {
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "lint": "eslint src/ tests/"
+    "lint": "eslint src/ tests/",
+    "doc": "npx jsdoc -r src -d docs/apidocs -R README.md"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
   "homepage": "https://github.com/fixed-width-file/javascript-fwf#readme",
   "devDependencies": {
     "@vitest/coverage-v8": "^2.1.9",
+    "jsdoc": "^4.0.4",
     "vitest": "^2.1.0"
   }
 }

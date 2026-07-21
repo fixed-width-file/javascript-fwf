@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: renders/RenderUtils.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: renders/RenderUtils.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { FileDescriptor } from '../descriptors/FileDescriptor.js';
+
+export class RenderUtils {
+  /**
+   * Renders FileDescriptor as Markdown string.
+   * @param {FileDescriptor} fileDescriptor
+   * @returns {string}
+   */
+  static renderAsMarkdown(fileDescriptor) {
+    if (!(fileDescriptor instanceof FileDescriptor)) {
+      throw new TypeError('fileDescriptor deve ser uma instância de FileDescriptor');
+    }
+
+    let out = '# Description\n\n';
+
+    function renderTable(title, cols, trailing = true) {
+      const maxColNameSize = Math.max(6, ...cols.map((c) => c.name.length));
+      const maxColTypeSize = Math.max(4, ...cols.map((c) => c.constructor.name.length));
+
+      out += `## ${title}\n\n`;
+      out += `|    # | ${'Column'.padEnd(maxColNameSize)} | Size | Start |  End | ${'Type'.padEnd(maxColTypeSize)} | Description\n`;
+      out += `| ---- | ${'-'.repeat(maxColNameSize)} | ---- | ----- | ---- | ${'-'.repeat(maxColTypeSize)} | -----------\n`;
+
+      cols.forEach((col, idx) => {
+        const line = String(idx + 1).padStart(4);
+        const name = col.name.padEnd(maxColNameSize);
+        const size = String(col.size).padStart(4);
+        const start = String(col.start).padStart(5);
+        const end = String(col.end).padStart(4);
+        const type = col.constructor.name.padEnd(maxColTypeSize);
+        out += `| ${line} | ${name} | ${size} | ${start} | ${end} | ${type} | ${col.description}\n`;
+      });
+
+      if (trailing) {
+        out += '\n';
+      }
+    }
+
+    if (fileDescriptor.header) {
+      renderTable('HEADER', fileDescriptor.header.columns);
+    }
+
+    fileDescriptor.details.forEach((detail, i) => {
+      renderTable(`DETAILS ${i + 1}`, detail.columns);
+    });
+
+    if (fileDescriptor.footer) {
+      renderTable('FOOTER', fileDescriptor.footer.columns, false);
+    }
+
+    return out;
+  }
+
+  /**
+   * Renders FileDescriptor as ReStructuredText (RST) string.
+   * @param {FileDescriptor} fileDescriptor
+   * @returns {string}
+   */
+  static renderAsRst(fileDescriptor) {
+    if (!(fileDescriptor instanceof FileDescriptor)) {
+      throw new TypeError('fileDescriptor deve ser uma instância de FileDescriptor');
+    }
+
+    let out = 'File Description\n===============\n\n';
+
+    function renderTable(title, cols, trailing = true) {
+      const headers = ['#', 'Column', 'Size', 'Start', 'End', 'Type', 'Description'];
+      const rows = cols.map((col, idx) => [
+        String(idx + 1),
+        col.name,
+        String(col.size),
+        String(col.start),
+        String(col.end),
+        col.constructor.name,
+        col.description,
+      ]);
+      const allRows = [headers, ...rows];
+      const colWidths = headers.map((_, i) => Math.max(...allRows.map((r) => r[i].length)));
+
+      const sep = () => colWidths.map((w) => '='.repeat(w)).join(' ') + '\n';
+
+      out += `${title}\n--------------------\n\n`;
+      out += sep();
+      out += headers.map((h, i) => h.padEnd(colWidths[i])).join(' ') + '\n';
+      out += sep();
+      rows.forEach((r) => {
+        out += r.map((cell, i) => cell.padEnd(colWidths[i])).join(' ') + '\n';
+      });
+      out += sep();
+      if (trailing) {
+        out += '\n';
+      }
+    }
+
+    if (fileDescriptor.header) {
+      renderTable('HEADER', fileDescriptor.header.columns);
+    }
+
+    fileDescriptor.details.forEach((detail, i) => {
+      renderTable(`DETAILS ${i + 1}`, detail.columns);
+    });
+
+    if (fileDescriptor.footer) {
+      renderTable('FOOTER', fileDescriptor.footer.columns, false);
+    }
+
+    return out;
+  }
+
+  /**
+   * Renders FileDescriptor as HTML string.
+   * @param {FileDescriptor} fileDescriptor
+   * @returns {string}
+   */
+  static renderAsHtml(fileDescriptor) {
+    if (!(fileDescriptor instanceof FileDescriptor)) {
+      throw new TypeError('fileDescriptor deve ser uma instância de FileDescriptor');
+    }
+
+    let out = '&lt;h1>Description&lt;/h1>\n';
+
+    function renderTable(title, cols, trailing = true) {
+      out += `&lt;h2>${title}&lt;/h2>\n`;
+      out += '&lt;table border="1">\n';
+      out += '&lt;tr>&lt;th>#&lt;/th>&lt;th>Column&lt;/th>&lt;th>Size&lt;/th>&lt;th>Start&lt;/th>&lt;th>End&lt;/th>&lt;th>Type&lt;/th>&lt;th>Description&lt;/th>&lt;/tr>\n';
+
+      cols.forEach((col, idx) => {
+        out +=
+          '&lt;tr>' +
+          `&lt;td>${idx + 1}&lt;/td>` +
+          `&lt;td>${col.name}&lt;/td>` +
+          `&lt;td>${col.size}&lt;/td>` +
+          `&lt;td>${col.start}&lt;/td>` +
+          `&lt;td>${col.end}&lt;/td>` +
+          `&lt;td>${col.constructor.name}&lt;/td>` +
+          `&lt;td>${col.description}&lt;/td>` +
+          '&lt;/tr>\n';
+      });
+
+      out += '&lt;/table>\n';
+      if (trailing) {
+        out += '&lt;br/>\n';
+      }
+    }
+
+    if (fileDescriptor.header) {
+      renderTable('HEADER', fileDescriptor.header.columns);
+    }
+
+    fileDescriptor.details.forEach((detail, i) => {
+      renderTable(`DETAILS ${i + 1}`, detail.columns);
+    });
+
+    if (fileDescriptor.footer) {
+      renderTable('FOOTER', fileDescriptor.footer.columns, false);
+    }
+
+    return out;
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractColumn.html">AbstractColumn</a></li><li><a href="CharColumn.html">CharColumn</a></li><li><a href="DateColumn.html">DateColumn</a></li><li><a href="DateTimeColumn.html">DateTimeColumn</a></li><li><a href="FileDescriptor.html">FileDescriptor</a></li><li><a href="PositiveDecimalColumn.html">PositiveDecimalColumn</a></li><li><a href="PositiveIntegerColumn.html">PositiveIntegerColumn</a></li><li><a href="Reader.html">Reader</a></li><li><a href="RightCharColumn.html">RightCharColumn</a></li><li><a href="RowDescriptor.html">RowDescriptor</a></li><li><a href="TimeColumn.html">TimeColumn</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 21 2026 16:42:55 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

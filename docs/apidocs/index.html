@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><!-- markdownlint-disable MD013 -->
+<h1>javascript-fwf</h1>
+<p><a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License"></a>
+<a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-18%2B-blue?logo=nodedotjs" alt="Node.js"></a>
+<a href="https://github.com/fixed-width-file/fwf-compliance-tests"><img src="https://img.shields.io/badge/FWF_Compliance-5%2F5_cases_passed-brightgreen?logo=github" alt="FWF Compliance"></a>
+<a href="https://github.com/fixed-width-file/javascript-fwf/actions/workflows/qa.yml"><img src="https://github.com/fixed-width-file/javascript-fwf/actions/workflows/qa.yml/badge.svg" alt="QA"></a>
+<a href="https://github.com/pre-commit/pre-commit"><img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit" alt="pre-commit"></a></p>
+<p><strong>javascript-fwf</strong> is a fast, type-safe JavaScript / ES Module library for parsing, validating, and exporting <strong>Fixed Width Files (FWF)</strong>.</p>
+<p>It is part of the <a href="https://fixed-width-file.github.io/">Fixed Width File Ecosystem</a> and fully implements the <strong><a href="https://github.com/fixed-width-file/fwf-compliance-tests">fwf-compliance-tests v1.0.0</a></strong> specification.</p>
+<hr>
+<h2>🌟 Key Features</h2>
+<ul>
+<li><strong>Type-Safe Columns</strong>: <code>CharColumn</code>, <code>RightCharColumn</code>, <code>PositiveIntegerColumn</code>, <code>PositiveDecimalColumn</code>, <code>DateColumn</code>, <code>TimeColumn</code>, and <code>DateTimeColumn</code>.</li>
+<li><strong>Flexible Descriptors</strong>: Structured records with <code>HeaderRowDescriptor</code>, <code>DetailRowDescriptor</code>, and <code>FooterRowDescriptor</code>.</li>
+<li><strong>Multiple Output Renders</strong>: Export layout specifications to Markdown, ReStructuredText (RST), or HTML tables via <code>RenderUtils</code>.</li>
+<li><strong>Full Test Suite &amp; Compliance</strong>: 100% compliant with <code>fwf-compliance-tests</code> v1.0.0.</li>
+<li><strong>Git Hooks Ready</strong>: Pre-configured <code>pre-commit</code> and <code>pre-push</code> hooks.</li>
+</ul>
+<hr>
+<h2>🚀 Installation</h2>
+<p>Install via <code>npm</code>:</p>
+<pre class="prettyprint source lang-bash"><code>npm install @fixed-width-file/javascript-fwf
+</code></pre>
+<hr>
+<h2>💡 Quickstart</h2>
+<pre class="prettyprint source lang-js"><code>import {
+  CharColumn,
+  PositiveIntegerColumn,
+  DetailRowDescriptor,
+  FileDescriptor,
+  Reader
+} from '@fixed-width-file/javascript-fwf';
+
+// 1. Define columns
+const nameCol = new CharColumn('name', 20, 'User Name');
+const ageCol = new PositiveIntegerColumn('age', 3, 'Age in years');
+
+// 2. Define row and file descriptors
+const detail = new DetailRowDescriptor([nameCol, ageCol]);
+const fileDescriptor = new FileDescriptor([detail]);
+
+// 3. Read fixed-width file content
+const content = &quot;KELSON MEDEIROS     045\nMARIA SILVA         030\n&quot;;
+const reader = new Reader(content, fileDescriptor, &quot;\n&quot;);
+
+for (const row of reader) {
+  console.log(`Name: ${row.name} | Age: ${row.age}`);
+}
+</code></pre>
+<hr>
+<h2>🧪 Testing &amp; Compliance</h2>
+<p>Run unit tests using Vitest:</p>
+<pre class="prettyprint source lang-bash"><code>npm test
+</code></pre>
+<p>Run test coverage:</p>
+<pre class="prettyprint source lang-bash"><code>npm run test:coverage
+</code></pre>
+<hr>
+<h2>⚓ Pre-Commit &amp; Pre-Push Setup</h2>
+<p>Set up pre-commit and pre-push hooks:</p>
+<pre class="prettyprint source lang-bash"><code>pre-commit install
+pre-commit install --hook-type pre-push
+</code></pre>
+<p>Run checks manually:</p>
+<pre class="prettyprint source lang-bash"><code>pre-commit run --all-files
+</code></pre>
+<hr>
+<h2>📄 License</h2>
+<p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractColumn.html">AbstractColumn</a></li><li><a href="CharColumn.html">CharColumn</a></li><li><a href="DateColumn.html">DateColumn</a></li><li><a href="DateTimeColumn.html">DateTimeColumn</a></li><li><a href="FileDescriptor.html">FileDescriptor</a></li><li><a href="PositiveDecimalColumn.html">PositiveDecimalColumn</a></li><li><a href="PositiveIntegerColumn.html">PositiveIntegerColumn</a></li><li><a href="Reader.html">Reader</a></li><li><a href="RightCharColumn.html">RightCharColumn</a></li><li><a href="RowDescriptor.html">RowDescriptor</a></li><li><a href="TimeColumn.html">TimeColumn</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 21 2026 16:42:55 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
