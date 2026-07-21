@@ -1,3 +1,8 @@
+/**
+ * @module columns
+ * Collection of type-safe column definitions for Fixed Width Files.
+ */
+
 export { AbstractColumn } from './AbstractColumn.js';
 export { CharColumn } from './CharColumn.js';
 export { RightCharColumn } from './RightCharColumn.js';

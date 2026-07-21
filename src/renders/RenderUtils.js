@@ -1,10 +1,16 @@
 import { FileDescriptor } from '../descriptors/FileDescriptor.js';
 
+/**
+ * Utility class for exporting layout specifications (FileDescriptor) to various documentation formats.
+ * Supports Markdown, ReStructuredText (RST), and HTML table formats.
+ */
 export class RenderUtils {
   /**
-   * Renders FileDescriptor as Markdown string.
-   * @param {FileDescriptor} fileDescriptor
-   * @returns {string}
+   * Renders a FileDescriptor layout specification as a Markdown formatted document string.
+   *
+   * @param {FileDescriptor} fileDescriptor - Layout descriptor to export.
+   * @returns {string} Formatted Markdown text.
+   * @throws {TypeError} If fileDescriptor is not an instance of FileDescriptor.
    */
   static renderAsMarkdown(fileDescriptor) {
     if (!(fileDescriptor instanceof FileDescriptor)) {
@@ -52,9 +58,11 @@ export class RenderUtils {
   }
 
   /**
-   * Renders FileDescriptor as ReStructuredText (RST) string.
-   * @param {FileDescriptor} fileDescriptor
-   * @returns {string}
+   * Renders a FileDescriptor layout specification as a ReStructuredText (RST) formatted document string.
+   *
+   * @param {FileDescriptor} fileDescriptor - Layout descriptor to export.
+   * @returns {string} Formatted ReStructuredText text.
+   * @throws {TypeError} If fileDescriptor is not an instance of FileDescriptor.
    */
   static renderAsRst(fileDescriptor) {
     if (!(fileDescriptor instanceof FileDescriptor)) {
@@ -108,9 +116,11 @@ export class RenderUtils {
   }
 
   /**
-   * Renders FileDescriptor as HTML string.
-   * @param {FileDescriptor} fileDescriptor
-   * @returns {string}
+   * Renders a FileDescriptor layout specification as an HTML table document string.
+   *
+   * @param {FileDescriptor} fileDescriptor - Layout descriptor to export.
+   * @returns {string} Formatted HTML text.
+   * @throws {TypeError} If fileDescriptor is not an instance of FileDescriptor.
    */
   static renderAsHtml(fileDescriptor) {
     if (!(fileDescriptor instanceof FileDescriptor)) {

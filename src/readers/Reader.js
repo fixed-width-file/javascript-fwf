@@ -1,29 +1,69 @@
 import { FileDescriptor } from '../descriptors/FileDescriptor.js';
 
 /**
- * Sequential reader for Fixed Width Files.
+ * Sequential reader and iterator for Fixed Width Files.
+ * Parses raw file content line-by-line according to a FileDescriptor specification.
+ *
+ * @example
+ * const reader = new Reader(fwfContent, fileDescriptor);
+ * for (const row of reader) {
+ *   console.log(row);
+ * }
  */
 export class Reader {
   /**
-   * @param {string | string[] | Iterable<string>} iterable
-   * @param {FileDescriptor} fileDescriptor
-   * @param {string} [newline="\n"]
+   * Creates an instance of Reader.
+   *
+   * @param {string | string[] | Iterable<string>} iterable - Content as a string, line array, or string iterable.
+   * @param {FileDescriptor} fileDescriptor - Layout specification for the file.
+   * @param {string} [newline="\n"] - Line separator sequence.
+   * @throws {TypeError} If fileDescriptor is not a FileDescriptor instance or iterable is invalid.
    */
   constructor(iterable, fileDescriptor, newline = '\n') {
     if (!(fileDescriptor instanceof FileDescriptor)) {
       throw new TypeError('fileDescriptor deve ser uma instância de FileDescriptor');
     }
 
+    /**
+     * Layout descriptor for the file.
+     * @type {FileDescriptor}
+     */
     this.fileDescriptor = fileDescriptor;
+
+    /**
+     * Line separator character.
+     * @type {string}
+     */
     this.newline = newline;
-    this.lines = [];
+
+    /**
+     * Current line number index during iteration (1-based).
+     * @type {number}
+     */
     this.lineNum = 0;
 
+    /**
+     * Array of extracted and normalized raw line strings.
+     * @type {string[]}
+     */
     this.lines = this.extractLines(iterable);
+
     this.validateAndNormalizeLines();
+
+    /**
+     * Total number of lines in the file.
+     * @type {number}
+     */
     this.linesCount = this.lines.length;
   }
 
+  /**
+   * Normalizes and splits various input types into an array of string lines.
+   *
+   * @param {string | string[] | Iterable<string>} iterable - Input content.
+   * @returns {string[]} Array of lines.
+   * @throws {TypeError} If input type is not supported.
+   */
   extractLines(iterable) {
     if (typeof iterable === 'string') {
       const normalized = iterable.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
@@ -45,6 +85,11 @@ export class Reader {
     throw new TypeError('Unsupported Iterable');
   }
 
+  /**
+   * Validates line lengths against expected file line size and pads trailing spaces if needed.
+   *
+   * @throws {Error} If line length exceeds expected file line size.
+   */
   validateAndNormalizeLines() {
     const expectedSize = this.fileDescriptor.lineSize;
     for (let i = 0; i < this.lines.length; i++) {
@@ -58,6 +103,11 @@ export class Reader {
     }
   }
 
+  /**
+   * Iterator generator producing parsed row objects sequentially.
+   *
+   * @yields {Record<string, *>} Parsed row values object for each line.
+   */
   *[Symbol.iterator]() {
     this.lineNum = 0;
     const totalLines = this.lines.length;

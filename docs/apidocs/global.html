@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Global</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Global</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="formatPythonDate"><span class="type-signature"></span>formatPythonDate<span class="signature">(dateObj, formatStr)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Formats a Date object using a Python-style strftime specifier string (%d, %m, %Y, %H, %M, %S).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dateObj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The UTC Date object to format.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>formatStr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Format pattern (e.g. "%d%m%Y%H%M%S").</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_DateTimeColumn.js.html">columns/DateTimeColumn.js</a>, <a href="columns_DateTimeColumn.js.html#line10">line 10</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Formatted date/time string.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="parsePythonDate"><span class="type-signature"></span>parsePythonDate<span class="signature">(str, formatStr)</span><span class="type-signature"> &rarr; {Date|null}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Parses a string formatted according to a Python-style strptime format pattern into a UTC Date object.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>str</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Raw date/time string.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>formatStr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Format pattern (e.g. "%d%m%Y%H%M").</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_DateTimeColumn.js.html">columns/DateTimeColumn.js</a>, <a href="columns_DateTimeColumn.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Parsed UTC Date object or null if parsing fails/invalid date.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Date</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="@fixed-width-file_javascript-fwf%250AMain%2520entry%2520point%2520for%2520Fixed%2520Width%2520File%2520(FWF)%2520processing%2520in%2520JavaScript%2520_%2520Node.js.module_.html">@fixed-width-file/javascript-fwf
+Main entry point for Fixed Width File (FWF) processing in JavaScript / Node.js.</a></li><li><a href="columns%250ACollection%2520of%2520type-safe%2520column%2520definitions%2520for%2520Fixed%2520Width%2520Files.module_.html">columns
+Collection of type-safe column definitions for Fixed Width Files.</a></li><li><a href="descriptors%250AStructure%2520descriptors%2520for%2520composing%2520Fixed%2520Width%2520File%2520layouts%2520(header,%2520details,%2520footer).module_.html">descriptors
+Structure descriptors for composing Fixed Width File layouts (header, details, footer).</a></li><li><a href="readers%250AReaders%2520for%2520processing%2520Fixed%2520Width%2520Files.module_.html">readers
+Readers for processing Fixed Width Files.</a></li><li><a href="renders%250AUtilities%2520for%2520rendering%2520layout%2520specifications%2520into%2520Markdown,%2520RST,%2520and%2520HTML%2520formats.module_.html">renders
+Utilities for rendering layout specifications into Markdown, RST, and HTML formats.</a></li></ul><h3>Classes</h3><ul><li><a href="AbstractColumn.html">AbstractColumn</a></li><li><a href="CharColumn.html">CharColumn</a></li><li><a href="DateColumn.html">DateColumn</a></li><li><a href="DateTimeColumn.html">DateTimeColumn</a></li><li><a href="DetailRowDescriptor.html">DetailRowDescriptor</a></li><li><a href="FileDescriptor.html">FileDescriptor</a></li><li><a href="FooterRowDescriptor.html">FooterRowDescriptor</a></li><li><a href="HeaderRowDescriptor.html">HeaderRowDescriptor</a></li><li><a href="PositiveDecimalColumn.html">PositiveDecimalColumn</a></li><li><a href="PositiveIntegerColumn.html">PositiveIntegerColumn</a></li><li><a href="Reader.html">Reader</a></li><li><a href="RenderUtils.html">RenderUtils</a></li><li><a href="RightCharColumn.html">RightCharColumn</a></li><li><a href="RowDescriptor.html">RowDescriptor</a></li><li><a href="TimeColumn.html">TimeColumn</a></li></ul><h3>Global</h3><ul><li><a href="global.html#formatPythonDate">formatPythonDate</a></li><li><a href="global.html#parsePythonDate">parsePythonDate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 21 2026 16:48:09 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

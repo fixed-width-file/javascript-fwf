@@ -1,5 +1,12 @@
 import { AbstractColumn } from './AbstractColumn.js';
 
+/**
+ * Formats a Date object using a Python-style strftime specifier string (%d, %m, %Y, %H, %M, %S).
+ *
+ * @param {Date} dateObj - The UTC Date object to format.
+ * @param {string} formatStr - Format pattern (e.g. "%d%m%Y%H%M%S").
+ * @returns {string} Formatted date/time string.
+ */
 export function formatPythonDate(dateObj, formatStr) {
   const d = String(dateObj.getUTCDate()).padStart(2, '0');
   const m = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
@@ -17,6 +24,13 @@ export function formatPythonDate(dateObj, formatStr) {
     .replace(/%S/g, S);
 }
 
+/**
+ * Parses a string formatted according to a Python-style strptime format pattern into a UTC Date object.
+ *
+ * @param {string} str - Raw date/time string.
+ * @param {string} formatStr - Format pattern (e.g. "%d%m%Y%H%M").
+ * @returns {Date|null} Parsed UTC Date object or null if parsing fails/invalid date.
+ */
 export function parsePythonDate(str, formatStr) {
   let regexStr = '^';
   const groupOrder = [];
@@ -74,14 +88,24 @@ export function parsePythonDate(str, formatStr) {
 }
 
 /**
- * DateTime column supporting custom formatting and null-padding.
+ * DateTime column supporting custom date-time formatting (%d, %m, %Y, %H, %M, %S) and null/zero-padding.
+ * Parses raw fixed-width date-time strings to UTC Date objects and vice versa.
+ *
+ * @extends AbstractColumn
+ * @example
+ * const col = new DateTimeColumn('created_at', '%d%m%Y%H%M', 'Creation Timestamp');
+ * col.toValue('210720261640'); // Date object (UTC: 2026-07-21T16:40:00.000Z)
  */
 export class DateTimeColumn extends AbstractColumn {
   /**
-   * @param {string} name
-   * @param {string} [format="%d%m%Y%H%M"]
-   * @param {string} [description]
-   * @param {number} [requiredFormatNumElements=5]
+   * Creates an instance of DateTimeColumn.
+   *
+   * @param {string} name - Column name.
+   * @param {string} [format="%d%m%Y%H%M"] - Date format string using Python strftime patterns.
+   * @param {string|null} [description=null] - Column description.
+   * @param {number} [requiredFormatNumElements=5] - Number of format specifiers required.
+   * @throws {TypeError} If name or format is not a string.
+   * @throws {Error} If name or format is blank, or format specifier count does not match requirement.
    */
   constructor(name, format = '%d%m%Y%H%M', description = null, requiredFormatNumElements = 5) {
     if (typeof name !== 'string') {
@@ -106,11 +130,33 @@ export class DateTimeColumn extends AbstractColumn {
     const size = formatPythonDate(sampleDate, format).length;
 
     super(name, size, description);
+
+    /**
+     * Date format pattern.
+     * @type {string}
+     */
     this.format = format;
+
+    /**
+     * Expected specifier count.
+     * @type {number}
+     */
     this.requiredFormatNumElements = requiredFormatNumElements;
+
+    /**
+     * Type descriptor for error assertions.
+     * @type {string}
+     */
     this.assertionType = 'datetime';
   }
 
+  /**
+   * Converts raw string slice from file into a UTC Date object.
+   *
+   * @param {string} slice - Raw fixed-width date-time string.
+   * @returns {Date|null} Parsed Date object or null if zero-filled string.
+   * @throws {Error} If slice does not match date-time format.
+   */
   toValue(slice) {
     super.toValue(slice);
     if (slice === '0'.repeat(this.size)) {
@@ -123,6 +169,13 @@ export class DateTimeColumn extends AbstractColumn {
     return parsed;
   }
 
+  /**
+   * Serializes a Date object into a formatted fixed-width string.
+   *
+   * @param {Date|null} value - Date object to format. Null/undefined serializes to zero string.
+   * @returns {string} Formatted fixed-width string.
+   * @throws {TypeError} If value is not a valid Date instance.
+   */
   toStr(value) {
     if (value === null || value === undefined) {
       return '0'.repeat(this.size);

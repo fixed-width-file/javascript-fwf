@@ -27,13 +27,20 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Base abstract class for fixed-width file columns.
+ * Base abstract class for all fixed-width file columns.
+ * Defines common properties (name, size, description, start/end position) and validation methods.
+ *
+ * @abstract
  */
 export class AbstractColumn {
   /**
-   * @param {string} name
-   * @param {number} size
-   * @param {string} [description]
+   * Creates an instance of AbstractColumn.
+   *
+   * @param {string} name - Unique identifier/name of the column.
+   * @param {number} size - Positional size (character width) of the column, must be > 0.
+   * @param {string|null} [description=null] - Description of the column. Defaults to name if omitted.
+   * @throws {TypeError} If name is not a string.
+   * @throws {Error} If name is blank or size is not an integer > 0.
    */
   constructor(name, size, description = null) {
     if (typeof name !== 'string') {
@@ -46,12 +53,38 @@ export class AbstractColumn {
       throw new Error('O campo size deve ser maior que 0');
     }
 
+    /**
+     * Name of the column.
+     * @type {string}
+     */
     this.name = name;
+
+    /**
+     * Character width of the column.
+     * @type {number}
+     */
     this.size = size;
+
+    /**
+     * Description of the column.
+     * @type {string}
+     */
     this.description = description === null || description === undefined ? name : description;
+
+    /**
+     * 1-indexed start position of the column within a row line.
+     * @type {number|null}
+     */
     this.start = null;
   }
 
+  /**
+   * 1-indexed end position of the column within a row line.
+   *
+   * @type {number}
+   * @throws {TypeError} If start position is not set.
+   * @throws {Error} If start position is &lt;= 0.
+   */
   get end() {
     if (this.start === null || this.start === undefined) {
       throw new TypeError('O campo start deve ser um inteiro');
@@ -63,9 +96,11 @@ export class AbstractColumn {
   }
 
   /**
-   * Converts raw string slice from file to column typed value.
-   * @param {string} slice
-   * @returns {any}
+   * Converts a raw string slice extracted from a fixed-width row line into a typed value.
+   *
+   * @param {string} slice - The exact substring matching the column size.
+   * @returns {*} The parsed value.
+   * @throws {Error} If slice is not a string or slice length does not match column size.
    */
   toValue(slice) {
     if (typeof slice !== 'string') {
@@ -78,9 +113,11 @@ export class AbstractColumn {
   }
 
   /**
-   * Validates that formatted string matches column size.
-   * @param {string} value
-   * @returns {string}
+   * Validates that a formatted string representation matches the required column size.
+   *
+   * @param {string} value - The formatted string to validate.
+   * @returns {string} The validated string.
+   * @throws {Error} If formatted string length does not equal column size.
    */
   validateToStrSize(value) {
     if (value.length !== this.size) {
@@ -90,9 +127,12 @@ export class AbstractColumn {
   }
 
   /**
-   * Serializes value to string representation.
-   * @param {any} value
-   * @returns {string}
+   * Serializes a JavaScript typed value into a fixed-width string representation.
+   *
+   * @abstract
+   * @param {*} value - Value to serialize.
+   * @returns {string} Fixed-width formatted string.
+   * @throws {Error} If not implemented by concrete column subclass.
    */
   toStr(value) {
     throw new Error('toStr method must be implemented');
@@ -108,13 +148,18 @@ export class AbstractColumn {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractColumn.html">AbstractColumn</a></li><li><a href="CharColumn.html">CharColumn</a></li><li><a href="DateColumn.html">DateColumn</a></li><li><a href="DateTimeColumn.html">DateTimeColumn</a></li><li><a href="FileDescriptor.html">FileDescriptor</a></li><li><a href="PositiveDecimalColumn.html">PositiveDecimalColumn</a></li><li><a href="PositiveIntegerColumn.html">PositiveIntegerColumn</a></li><li><a href="Reader.html">Reader</a></li><li><a href="RightCharColumn.html">RightCharColumn</a></li><li><a href="RowDescriptor.html">RowDescriptor</a></li><li><a href="TimeColumn.html">TimeColumn</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="@fixed-width-file_javascript-fwf%250AMain%2520entry%2520point%2520for%2520Fixed%2520Width%2520File%2520(FWF)%2520processing%2520in%2520JavaScript%2520_%2520Node.js.module_.html">@fixed-width-file/javascript-fwf
+Main entry point for Fixed Width File (FWF) processing in JavaScript / Node.js.</a></li><li><a href="columns%250ACollection%2520of%2520type-safe%2520column%2520definitions%2520for%2520Fixed%2520Width%2520Files.module_.html">columns
+Collection of type-safe column definitions for Fixed Width Files.</a></li><li><a href="descriptors%250AStructure%2520descriptors%2520for%2520composing%2520Fixed%2520Width%2520File%2520layouts%2520(header,%2520details,%2520footer).module_.html">descriptors
+Structure descriptors for composing Fixed Width File layouts (header, details, footer).</a></li><li><a href="readers%250AReaders%2520for%2520processing%2520Fixed%2520Width%2520Files.module_.html">readers
+Readers for processing Fixed Width Files.</a></li><li><a href="renders%250AUtilities%2520for%2520rendering%2520layout%2520specifications%2520into%2520Markdown,%2520RST,%2520and%2520HTML%2520formats.module_.html">renders
+Utilities for rendering layout specifications into Markdown, RST, and HTML formats.</a></li></ul><h3>Classes</h3><ul><li><a href="AbstractColumn.html">AbstractColumn</a></li><li><a href="CharColumn.html">CharColumn</a></li><li><a href="DateColumn.html">DateColumn</a></li><li><a href="DateTimeColumn.html">DateTimeColumn</a></li><li><a href="DetailRowDescriptor.html">DetailRowDescriptor</a></li><li><a href="FileDescriptor.html">FileDescriptor</a></li><li><a href="FooterRowDescriptor.html">FooterRowDescriptor</a></li><li><a href="HeaderRowDescriptor.html">HeaderRowDescriptor</a></li><li><a href="PositiveDecimalColumn.html">PositiveDecimalColumn</a></li><li><a href="PositiveIntegerColumn.html">PositiveIntegerColumn</a></li><li><a href="Reader.html">Reader</a></li><li><a href="RenderUtils.html">RenderUtils</a></li><li><a href="RightCharColumn.html">RightCharColumn</a></li><li><a href="RowDescriptor.html">RowDescriptor</a></li><li><a href="TimeColumn.html">TimeColumn</a></li></ul><h3>Global</h3><ul><li><a href="global.html#formatPythonDate">formatPythonDate</a></li><li><a href="global.html#parsePythonDate">parsePythonDate</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 21 2026 16:42:55 GMT-0300 (Horário Padrão de Brasília)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 21 2026 16:48:09 GMT-0300 (Horário Padrão de Brasília)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -30,7 +30,8 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>TimeColumn<span class="signature">(name, format<span class="signature-attributes">opt</span>, description<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Time column supporting custom formatting and null-padding.</div>
+            <div class="class-description">Time column supporting custom formatting (default "%H%M") and null/zero-padding.
+Parses raw time strings into UTC Date objects.</div>
         
     
 </header>
@@ -51,6 +52,10 @@
     
 
 
+
+<div class="description">
+    Creates an instance of TimeColumn.
+</div>
 
 
 
@@ -117,7 +122,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last">Column name.</td>
         </tr>
 
     
@@ -156,7 +161,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last">Time format pattern.</td>
         </tr>
 
     
@@ -170,6 +175,9 @@
             
                 
 <span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
 
 
             
@@ -195,7 +203,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last">Column description.</td>
         </tr>
 
     
@@ -236,7 +244,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="columns_TimeColumn.js.html">columns/TimeColumn.js</a>, <a href="columns_TimeColumn.js.html#line6">line 6</a>
+        <a href="columns_TimeColumn.js.html">columns/TimeColumn.js</a>, <a href="columns_TimeColumn.js.html#line12">line 12</a>
     </li></ul></dd>
     
 
@@ -265,9 +273,26 @@
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const col = new TimeColumn('opening_time', '%H%M', 'Opening Time');
+col.toValue('1430'); // Date object (UTC: 2000-01-01T14:30:00.000Z)</code></pre>
+
+
 
     
     </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="DateTimeColumn.html">DateTimeColumn</a></li>
+    </ul>
+
 
     
 
@@ -289,7 +314,1219 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
 
+        
+            
+<h4 class="name" id="assertionType"><span class="type-signature"></span>assertionType<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    Type descriptor for error assertions.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="DateTimeColumn.html#assertionType">DateTimeColumn#assertionType</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_DateTimeColumn.js.html">columns/DateTimeColumn.js</a>, <a href="columns_DateTimeColumn.js.html#line150">line 150</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="description"><span class="type-signature"></span>description<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    Description of the column.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="DateTimeColumn.html#description">DateTimeColumn#description</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_AbstractColumn.js.html">columns/AbstractColumn.js</a>, <a href="columns_AbstractColumn.js.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="end"><span class="type-signature"></span>end<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    1-indexed end position of the column within a row line.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="DateTimeColumn.html#end">DateTimeColumn#end</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_AbstractColumn.js.html">columns/AbstractColumn.js</a>, <a href="columns_AbstractColumn.js.html#line60">line 60</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="format"><span class="type-signature"></span>format<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    Date format pattern.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="DateTimeColumn.html#format">DateTimeColumn#format</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_DateTimeColumn.js.html">columns/DateTimeColumn.js</a>, <a href="columns_DateTimeColumn.js.html#line138">line 138</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="name"><span class="type-signature"></span>name<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    Name of the column.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="DateTimeColumn.html#name">DateTimeColumn#name</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_AbstractColumn.js.html">columns/AbstractColumn.js</a>, <a href="columns_AbstractColumn.js.html#line32">line 32</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="requiredFormatNumElements"><span class="type-signature"></span>requiredFormatNumElements<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Expected specifier count.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="DateTimeColumn.html#requiredFormatNumElements">DateTimeColumn#requiredFormatNumElements</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_DateTimeColumn.js.html">columns/DateTimeColumn.js</a>, <a href="columns_DateTimeColumn.js.html#line144">line 144</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="size"><span class="type-signature"></span>size<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    Character width of the column.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="DateTimeColumn.html#size">DateTimeColumn#size</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_AbstractColumn.js.html">columns/AbstractColumn.js</a>, <a href="columns_AbstractColumn.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="start"><span class="type-signature"></span>start<span class="type-signature"> :number|null</span></h4>
+
+
+
+
+<div class="description">
+    1-indexed start position of the column within a row line.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+|
+
+<span class="param-type">null</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="DateTimeColumn.html#start">DateTimeColumn#start</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_AbstractColumn.js.html">columns/AbstractColumn.js</a>, <a href="columns_AbstractColumn.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="toStr"><span class="type-signature"></span>toStr<span class="signature">(value)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Serializes a Date object into a formatted fixed-width string.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+|
+
+<span class="param-type">null</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Date object to format. Null/undefined serializes to zero string.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="DateTimeColumn.html#toStr">DateTimeColumn#toStr</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_DateTimeColumn.js.html">columns/DateTimeColumn.js</a>, <a href="columns_DateTimeColumn.js.html#line179">line 179</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        If value is not a valid Date instance.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">TypeError</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Formatted fixed-width string.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="toValue"><span class="type-signature"></span>toValue<span class="signature">(slice)</span><span class="type-signature"> &rarr; {Date|null}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Converts raw string slice from file into a UTC Date object.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>slice</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Raw fixed-width date-time string.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="DateTimeColumn.html#toValue">DateTimeColumn#toValue</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_DateTimeColumn.js.html">columns/DateTimeColumn.js</a>, <a href="columns_DateTimeColumn.js.html#line160">line 160</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        If slice does not match date-time format.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Parsed Date object or null if zero-filled string.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Date</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="validateToStrSize"><span class="type-signature"></span>validateToStrSize<span class="signature">(value)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Validates that a formatted string representation matches the required column size.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The formatted string to validate.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="DateTimeColumn.html#validateToStrSize">DateTimeColumn#validateToStrSize</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="columns_AbstractColumn.js.html">columns/AbstractColumn.js</a>, <a href="columns_AbstractColumn.js.html#line94">line 94</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        If formatted string length does not equal column size.
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">Error</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The validated string.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -305,13 +1542,18 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractColumn.html">AbstractColumn</a></li><li><a href="CharColumn.html">CharColumn</a></li><li><a href="DateColumn.html">DateColumn</a></li><li><a href="DateTimeColumn.html">DateTimeColumn</a></li><li><a href="FileDescriptor.html">FileDescriptor</a></li><li><a href="PositiveDecimalColumn.html">PositiveDecimalColumn</a></li><li><a href="PositiveIntegerColumn.html">PositiveIntegerColumn</a></li><li><a href="Reader.html">Reader</a></li><li><a href="RightCharColumn.html">RightCharColumn</a></li><li><a href="RowDescriptor.html">RowDescriptor</a></li><li><a href="TimeColumn.html">TimeColumn</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="@fixed-width-file_javascript-fwf%250AMain%2520entry%2520point%2520for%2520Fixed%2520Width%2520File%2520(FWF)%2520processing%2520in%2520JavaScript%2520_%2520Node.js.module_.html">@fixed-width-file/javascript-fwf
+Main entry point for Fixed Width File (FWF) processing in JavaScript / Node.js.</a></li><li><a href="columns%250ACollection%2520of%2520type-safe%2520column%2520definitions%2520for%2520Fixed%2520Width%2520Files.module_.html">columns
+Collection of type-safe column definitions for Fixed Width Files.</a></li><li><a href="descriptors%250AStructure%2520descriptors%2520for%2520composing%2520Fixed%2520Width%2520File%2520layouts%2520(header,%2520details,%2520footer).module_.html">descriptors
+Structure descriptors for composing Fixed Width File layouts (header, details, footer).</a></li><li><a href="readers%250AReaders%2520for%2520processing%2520Fixed%2520Width%2520Files.module_.html">readers
+Readers for processing Fixed Width Files.</a></li><li><a href="renders%250AUtilities%2520for%2520rendering%2520layout%2520specifications%2520into%2520Markdown,%2520RST,%2520and%2520HTML%2520formats.module_.html">renders
+Utilities for rendering layout specifications into Markdown, RST, and HTML formats.</a></li></ul><h3>Classes</h3><ul><li><a href="AbstractColumn.html">AbstractColumn</a></li><li><a href="CharColumn.html">CharColumn</a></li><li><a href="DateColumn.html">DateColumn</a></li><li><a href="DateTimeColumn.html">DateTimeColumn</a></li><li><a href="DetailRowDescriptor.html">DetailRowDescriptor</a></li><li><a href="FileDescriptor.html">FileDescriptor</a></li><li><a href="FooterRowDescriptor.html">FooterRowDescriptor</a></li><li><a href="HeaderRowDescriptor.html">HeaderRowDescriptor</a></li><li><a href="PositiveDecimalColumn.html">PositiveDecimalColumn</a></li><li><a href="PositiveIntegerColumn.html">PositiveIntegerColumn</a></li><li><a href="Reader.html">Reader</a></li><li><a href="RenderUtils.html">RenderUtils</a></li><li><a href="RightCharColumn.html">RightCharColumn</a></li><li><a href="RowDescriptor.html">RowDescriptor</a></li><li><a href="TimeColumn.html">TimeColumn</a></li></ul><h3>Global</h3><ul><li><a href="global.html#formatPythonDate">formatPythonDate</a></li><li><a href="global.html#parsePythonDate">parsePythonDate</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 21 2026 16:42:55 GMT-0300 (Horário Padrão de Brasília)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 21 2026 16:48:09 GMT-0300 (Horário Padrão de Brasília)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -1,11 +1,25 @@
 import { AbstractColumn } from '../columns/AbstractColumn.js';
 
 /**
- * Descriptor representing a single row layout in a Fixed Width File.
+ * Descriptor representing a single row layout structure in a Fixed Width File.
+ * Calculates column start/end offsets automatically and extracts typed object records from raw line strings.
+ *
+ * @example
+ * const descriptor = new RowDescriptor([
+ *   new CharColumn('name', 20),
+ *   new PositiveIntegerColumn('age', 3)
+ * ]);
+ * console.log(descriptor.lineSize); // 23
+ * const row = descriptor.getValues('KELSON MEDEIROS     045');
+ * // { name: 'KELSON MEDEIROS', age: 45 }
  */
 export class RowDescriptor {
   /**
-   * @param {AbstractColumn[]} columns
+   * Creates an instance of RowDescriptor.
+   *
+   * @param {AbstractColumn[]} columns - List of column instances composing the row layout.
+   * @throws {TypeError} If columns argument is not an Array or elements are not AbstractColumn instances.
+   * @throws {Error} If columns array is empty or column positions overlap/contain gaps.
    */
   constructor(columns) {
     if (!Array.isArray(columns)) {
@@ -15,6 +29,10 @@ export class RowDescriptor {
       throw new Error('columns deve ter ao menos 1 elemento');
     }
 
+    /**
+     * List of columns forming this row descriptor.
+     * @type {AbstractColumn[]}
+     */
     this.columns = columns;
 
     let last = null;
@@ -29,10 +47,20 @@ export class RowDescriptor {
     this.validatePositions();
   }
 
+  /**
+   * Total line size width in characters calculated from the last column's end position.
+   *
+   * @type {number}
+   */
   get lineSize() {
     return this.columns[this.columns.length - 1].end;
   }
 
+  /**
+   * Validates contiguous column alignment starting from position 1 without gaps or overlaps.
+   *
+   * @throws {Error} If alignment check fails.
+   */
   validatePositions() {
     let prev = null;
     for (const col of this.columns) {
@@ -52,9 +80,11 @@ export class RowDescriptor {
   }
 
   /**
-   * Slices line string into key-value map.
-   * @param {string} rowLine
-   * @returns {Record<string, any>}
+   * Extracts and parses a raw fixed-width row line string into a key-value object of typed values.
+   *
+   * @param {string} rowLine - Fixed-width row string matching the line size.
+   * @returns {Record<string, *>} Object containing parsed column key-value pairs.
+   * @throws {TypeError} If rowLine is not a string.
    */
   getValues(rowLine) {
     if (typeof rowLine !== 'string') {

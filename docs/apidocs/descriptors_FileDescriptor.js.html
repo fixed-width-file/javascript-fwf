@@ -29,13 +29,22 @@
             <pre class="prettyprint source linenums"><code>import { DetailRowDescriptor } from './RowDescriptors.js';
 
 /**
- * Descriptor representing the layout structure of a Fixed Width File.
+ * Descriptor representing the overall layout structure of a Fixed Width File (FWF).
+ * Contains row descriptors for details, optional header, and optional footer.
+ *
+ * @example
+ * const detail = new DetailRowDescriptor([new CharColumn('name', 20)]);
+ * const fileDesc = new FileDescriptor([detail]);
  */
 export class FileDescriptor {
   /**
-   * @param {DetailRowDescriptor[]} details
-   * @param {HeaderRowDescriptor} [header=null]
-   * @param {FooterRowDescriptor} [footer=null]
+   * Creates an instance of FileDescriptor.
+   *
+   * @param {DetailRowDescriptor[]} details - Array of detail row descriptors.
+   * @param {HeaderRowDescriptor|null} [header=null] - Optional header row descriptor.
+   * @param {FooterRowDescriptor|null} [footer=null] - Optional footer row descriptor.
+   * @throws {TypeError} If details is not an Array or elements are not DetailRowDescriptor.
+   * @throws {Error} If details array is empty or row line sizes do not match.
    */
   constructor(details, header = null, footer = null) {
     if (!Array.isArray(details)) {
@@ -51,17 +60,41 @@ export class FileDescriptor {
       }
     }
 
+    /**
+     * Array of detail row descriptors.
+     * @type {DetailRowDescriptor[]}
+     */
     this.details = details;
+
+    /**
+     * Optional header row descriptor.
+     * @type {HeaderRowDescriptor|null}
+     */
     this.header = header;
+
+    /**
+     * Optional footer row descriptor.
+     * @type {FooterRowDescriptor|null}
+     */
     this.footer = footer;
 
     this.validateLineSizes();
   }
 
+  /**
+   * Expected total line size width in characters across all row descriptors.
+   *
+   * @type {number}
+   */
   get lineSize() {
     return this.details[0].lineSize;
   }
 
+  /**
+   * Validates that all row descriptors (details, header, and footer) have matching line sizes.
+   *
+   * @throws {Error} If line sizes differ across row descriptors.
+   */
   validateLineSizes() {
     const expectedSize = this.details[0].lineSize;
 
@@ -94,13 +127,18 @@ export class FileDescriptor {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractColumn.html">AbstractColumn</a></li><li><a href="CharColumn.html">CharColumn</a></li><li><a href="DateColumn.html">DateColumn</a></li><li><a href="DateTimeColumn.html">DateTimeColumn</a></li><li><a href="FileDescriptor.html">FileDescriptor</a></li><li><a href="PositiveDecimalColumn.html">PositiveDecimalColumn</a></li><li><a href="PositiveIntegerColumn.html">PositiveIntegerColumn</a></li><li><a href="Reader.html">Reader</a></li><li><a href="RightCharColumn.html">RightCharColumn</a></li><li><a href="RowDescriptor.html">RowDescriptor</a></li><li><a href="TimeColumn.html">TimeColumn</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="@fixed-width-file_javascript-fwf%250AMain%2520entry%2520point%2520for%2520Fixed%2520Width%2520File%2520(FWF)%2520processing%2520in%2520JavaScript%2520_%2520Node.js.module_.html">@fixed-width-file/javascript-fwf
+Main entry point for Fixed Width File (FWF) processing in JavaScript / Node.js.</a></li><li><a href="columns%250ACollection%2520of%2520type-safe%2520column%2520definitions%2520for%2520Fixed%2520Width%2520Files.module_.html">columns
+Collection of type-safe column definitions for Fixed Width Files.</a></li><li><a href="descriptors%250AStructure%2520descriptors%2520for%2520composing%2520Fixed%2520Width%2520File%2520layouts%2520(header,%2520details,%2520footer).module_.html">descriptors
+Structure descriptors for composing Fixed Width File layouts (header, details, footer).</a></li><li><a href="readers%250AReaders%2520for%2520processing%2520Fixed%2520Width%2520Files.module_.html">readers
+Readers for processing Fixed Width Files.</a></li><li><a href="renders%250AUtilities%2520for%2520rendering%2520layout%2520specifications%2520into%2520Markdown,%2520RST,%2520and%2520HTML%2520formats.module_.html">renders
+Utilities for rendering layout specifications into Markdown, RST, and HTML formats.</a></li></ul><h3>Classes</h3><ul><li><a href="AbstractColumn.html">AbstractColumn</a></li><li><a href="CharColumn.html">CharColumn</a></li><li><a href="DateColumn.html">DateColumn</a></li><li><a href="DateTimeColumn.html">DateTimeColumn</a></li><li><a href="DetailRowDescriptor.html">DetailRowDescriptor</a></li><li><a href="FileDescriptor.html">FileDescriptor</a></li><li><a href="FooterRowDescriptor.html">FooterRowDescriptor</a></li><li><a href="HeaderRowDescriptor.html">HeaderRowDescriptor</a></li><li><a href="PositiveDecimalColumn.html">PositiveDecimalColumn</a></li><li><a href="PositiveIntegerColumn.html">PositiveIntegerColumn</a></li><li><a href="Reader.html">Reader</a></li><li><a href="RenderUtils.html">RenderUtils</a></li><li><a href="RightCharColumn.html">RightCharColumn</a></li><li><a href="RowDescriptor.html">RowDescriptor</a></li><li><a href="TimeColumn.html">TimeColumn</a></li></ul><h3>Global</h3><ul><li><a href="global.html#formatPythonDate">formatPythonDate</a></li><li><a href="global.html#parsePythonDate">parsePythonDate</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 21 2026 16:42:55 GMT-0300 (Horário Padrão de Brasília)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 21 2026 16:48:09 GMT-0300 (Horário Padrão de Brasília)
 </footer>
 
 <script> prettyPrint(); </script>

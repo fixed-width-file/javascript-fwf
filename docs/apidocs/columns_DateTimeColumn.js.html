@@ -28,6 +28,13 @@
         <article>
             <pre class="prettyprint source linenums"><code>import { AbstractColumn } from './AbstractColumn.js';
 
+/**
+ * Formats a Date object using a Python-style strftime specifier string (%d, %m, %Y, %H, %M, %S).
+ *
+ * @param {Date} dateObj - The UTC Date object to format.
+ * @param {string} formatStr - Format pattern (e.g. "%d%m%Y%H%M%S").
+ * @returns {string} Formatted date/time string.
+ */
 export function formatPythonDate(dateObj, formatStr) {
   const d = String(dateObj.getUTCDate()).padStart(2, '0');
   const m = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
@@ -45,6 +52,13 @@ export function formatPythonDate(dateObj, formatStr) {
     .replace(/%S/g, S);
 }
 
+/**
+ * Parses a string formatted according to a Python-style strptime format pattern into a UTC Date object.
+ *
+ * @param {string} str - Raw date/time string.
+ * @param {string} formatStr - Format pattern (e.g. "%d%m%Y%H%M").
+ * @returns {Date|null} Parsed UTC Date object or null if parsing fails/invalid date.
+ */
 export function parsePythonDate(str, formatStr) {
   let regexStr = '^';
   const groupOrder = [];
@@ -102,14 +116,24 @@ export function parsePythonDate(str, formatStr) {
 }
 
 /**
- * DateTime column supporting custom formatting and null-padding.
+ * DateTime column supporting custom date-time formatting (%d, %m, %Y, %H, %M, %S) and null/zero-padding.
+ * Parses raw fixed-width date-time strings to UTC Date objects and vice versa.
+ *
+ * @extends AbstractColumn
+ * @example
+ * const col = new DateTimeColumn('created_at', '%d%m%Y%H%M', 'Creation Timestamp');
+ * col.toValue('210720261640'); // Date object (UTC: 2026-07-21T16:40:00.000Z)
  */
 export class DateTimeColumn extends AbstractColumn {
   /**
-   * @param {string} name
-   * @param {string} [format="%d%m%Y%H%M"]
-   * @param {string} [description]
-   * @param {number} [requiredFormatNumElements=5]
+   * Creates an instance of DateTimeColumn.
+   *
+   * @param {string} name - Column name.
+   * @param {string} [format="%d%m%Y%H%M"] - Date format string using Python strftime patterns.
+   * @param {string|null} [description=null] - Column description.
+   * @param {number} [requiredFormatNumElements=5] - Number of format specifiers required.
+   * @throws {TypeError} If name or format is not a string.
+   * @throws {Error} If name or format is blank, or format specifier count does not match requirement.
    */
   constructor(name, format = '%d%m%Y%H%M', description = null, requiredFormatNumElements = 5) {
     if (typeof name !== 'string') {
@@ -134,11 +158,33 @@ export class DateTimeColumn extends AbstractColumn {
     const size = formatPythonDate(sampleDate, format).length;
 
     super(name, size, description);
+
+    /**
+     * Date format pattern.
+     * @type {string}
+     */
     this.format = format;
+
+    /**
+     * Expected specifier count.
+     * @type {number}
+     */
     this.requiredFormatNumElements = requiredFormatNumElements;
+
+    /**
+     * Type descriptor for error assertions.
+     * @type {string}
+     */
     this.assertionType = 'datetime';
   }
 
+  /**
+   * Converts raw string slice from file into a UTC Date object.
+   *
+   * @param {string} slice - Raw fixed-width date-time string.
+   * @returns {Date|null} Parsed Date object or null if zero-filled string.
+   * @throws {Error} If slice does not match date-time format.
+   */
   toValue(slice) {
     super.toValue(slice);
     if (slice === '0'.repeat(this.size)) {
@@ -151,6 +197,13 @@ export class DateTimeColumn extends AbstractColumn {
     return parsed;
   }
 
+  /**
+   * Serializes a Date object into a formatted fixed-width string.
+   *
+   * @param {Date|null} value - Date object to format. Null/undefined serializes to zero string.
+   * @returns {string} Formatted fixed-width string.
+   * @throws {TypeError} If value is not a valid Date instance.
+   */
   toStr(value) {
     if (value === null || value === undefined) {
       return '0'.repeat(this.size);
@@ -172,13 +225,18 @@ export class DateTimeColumn extends AbstractColumn {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AbstractColumn.html">AbstractColumn</a></li><li><a href="CharColumn.html">CharColumn</a></li><li><a href="DateColumn.html">DateColumn</a></li><li><a href="DateTimeColumn.html">DateTimeColumn</a></li><li><a href="FileDescriptor.html">FileDescriptor</a></li><li><a href="PositiveDecimalColumn.html">PositiveDecimalColumn</a></li><li><a href="PositiveIntegerColumn.html">PositiveIntegerColumn</a></li><li><a href="Reader.html">Reader</a></li><li><a href="RightCharColumn.html">RightCharColumn</a></li><li><a href="RowDescriptor.html">RowDescriptor</a></li><li><a href="TimeColumn.html">TimeColumn</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="@fixed-width-file_javascript-fwf%250AMain%2520entry%2520point%2520for%2520Fixed%2520Width%2520File%2520(FWF)%2520processing%2520in%2520JavaScript%2520_%2520Node.js.module_.html">@fixed-width-file/javascript-fwf
+Main entry point for Fixed Width File (FWF) processing in JavaScript / Node.js.</a></li><li><a href="columns%250ACollection%2520of%2520type-safe%2520column%2520definitions%2520for%2520Fixed%2520Width%2520Files.module_.html">columns
+Collection of type-safe column definitions for Fixed Width Files.</a></li><li><a href="descriptors%250AStructure%2520descriptors%2520for%2520composing%2520Fixed%2520Width%2520File%2520layouts%2520(header,%2520details,%2520footer).module_.html">descriptors
+Structure descriptors for composing Fixed Width File layouts (header, details, footer).</a></li><li><a href="readers%250AReaders%2520for%2520processing%2520Fixed%2520Width%2520Files.module_.html">readers
+Readers for processing Fixed Width Files.</a></li><li><a href="renders%250AUtilities%2520for%2520rendering%2520layout%2520specifications%2520into%2520Markdown,%2520RST,%2520and%2520HTML%2520formats.module_.html">renders
+Utilities for rendering layout specifications into Markdown, RST, and HTML formats.</a></li></ul><h3>Classes</h3><ul><li><a href="AbstractColumn.html">AbstractColumn</a></li><li><a href="CharColumn.html">CharColumn</a></li><li><a href="DateColumn.html">DateColumn</a></li><li><a href="DateTimeColumn.html">DateTimeColumn</a></li><li><a href="DetailRowDescriptor.html">DetailRowDescriptor</a></li><li><a href="FileDescriptor.html">FileDescriptor</a></li><li><a href="FooterRowDescriptor.html">FooterRowDescriptor</a></li><li><a href="HeaderRowDescriptor.html">HeaderRowDescriptor</a></li><li><a href="PositiveDecimalColumn.html">PositiveDecimalColumn</a></li><li><a href="PositiveIntegerColumn.html">PositiveIntegerColumn</a></li><li><a href="Reader.html">Reader</a></li><li><a href="RenderUtils.html">RenderUtils</a></li><li><a href="RightCharColumn.html">RightCharColumn</a></li><li><a href="RowDescriptor.html">RowDescriptor</a></li><li><a href="TimeColumn.html">TimeColumn</a></li></ul><h3>Global</h3><ul><li><a href="global.html#formatPythonDate">formatPythonDate</a></li><li><a href="global.html#parsePythonDate">parsePythonDate</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 21 2026 16:42:55 GMT-0300 (Horário Padrão de Brasília)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Jul 21 2026 16:48:09 GMT-0300 (Horário Padrão de Brasília)
 </footer>
 
 <script> prettyPrint(); </script>
