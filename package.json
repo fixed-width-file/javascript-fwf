@@ -1,0 +1,39 @@
+{
+  "name": "@fixed-width-file/javascript-fwf",
+  "version": "1.0.0",
+  "description": "JavaScript / Node.js implementation of the Fixed Width File (FWF) specification.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./columns": "./src/columns/index.js",
+    "./descriptors": "./src/descriptors/index.js",
+    "./readers": "./src/readers/index.js",
+    "./renders": "./src/renders/index.js"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/ tests/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fixed-width-file/javascript-fwf.git"
+  },
+  "keywords": [
+    "fwf",
+    "fixed-width-file",
+    "parser",
+    "positional-file"
+  ],
+  "author": "Kelson da Costa Medeiros <kelsoncm@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fixed-width-file/javascript-fwf/issues"
+  },
+  "homepage": "https://github.com/fixed-width-file/javascript-fwf#readme",
+  "devDependencies": {
+    "@vitest/coverage-v8": "^2.1.9",
+    "vitest": "^2.1.0"
+  }
+}
