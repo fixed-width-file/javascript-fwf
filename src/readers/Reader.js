@@ -10,6 +10,20 @@ import { FileDescriptor } from '../descriptors/FileDescriptor.js';
  *   console.log(row);
  * }
  */
+/**
+ * Removes trailing CR/LF characters in linear time (avoids a backtracking regex on library input).
+ *
+ * @param {string} line - Line to trim.
+ * @returns {string} The line without trailing line breaks.
+ */
+function stripTrailingLineBreaks(line) {
+  let end = line.length;
+  while (end > 0 && (line[end - 1] === '\n' || line[end - 1] === '\r')) {
+    end -= 1;
+  }
+  return line.slice(0, end);
+}
+
 export class Reader {
   /**
    * Creates an instance of Reader.
@@ -75,11 +89,11 @@ export class Reader {
     }
 
     if (Array.isArray(iterable)) {
-      return iterable.map((l) => (l.endsWith('\n') || l.endsWith('\r') ? l.replace(/[\r\n]+$/, '') : l));
+      return iterable.map((l) => (l.endsWith('\n') || l.endsWith('\r') ? stripTrailingLineBreaks(l) : l));
     }
 
     if (iterable && typeof iterable[Symbol.iterator] === 'function') {
-      return Array.from(iterable).map((l) => (typeof l === 'string' ? l.replace(/[\r\n]+$/, '') : l));
+      return Array.from(iterable).map((l) => (typeof l === 'string' ? stripTrailingLineBreaks(l) : l));
     }
 
     throw new TypeError('Unsupported Iterable');

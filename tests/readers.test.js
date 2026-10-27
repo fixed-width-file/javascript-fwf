@@ -41,4 +41,13 @@ describe('Reader', () => {
 
     expect(() => new Reader('SHORT\nTOO LONG LINE\n', fd)).toThrow(Error);
   });
+
+  it('strips only trailing line breaks from array and iterable input', () => {
+    const fd = new FileDescriptor([new DetailRowDescriptor([new CharColumn('c', 3)])]);
+    const reader = new Reader(['AB \r\n\r\n', 'CD \n', 'EF \r', 'GH '], fd);
+    expect(reader.extractLines(['AB \r\n\r\n', 'CD \n', 'EF \r', 'GH '])).toEqual(['AB ', 'CD ', 'EF ', 'GH ']);
+    expect(reader.extractLines(new Set(['IJ \n\n', 'KL ']))).toEqual(['IJ ', 'KL ']);
+    const long = 'X'.repeat(20) + '\n'.repeat(50000);
+    expect(reader.extractLines([long])).toEqual(['X'.repeat(20)]);
+  });
 });
