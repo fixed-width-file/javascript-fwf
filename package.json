@@ -1,6 +1,6 @@
 {
   "name": "@fixed-width-file/javascript-fwf",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "JavaScript / Node.js implementation of the Fixed Width File (FWF) specification.",
   "type": "module",
   "main": "src/index.js",
@@ -34,8 +34,8 @@
   },
   "homepage": "https://github.com/fixed-width-file/javascript-fwf#readme",
   "devDependencies": {
-    "@vitest/coverage-v8": "^2.1.9",
+    "@vitest/coverage-v8": "^3.2.7",
     "jsdoc": "^4.0.4",
-    "vitest": "^2.1.0"
+    "vitest": "^3.2.7"
   }
 }
